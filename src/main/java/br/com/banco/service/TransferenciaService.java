@@ -34,6 +34,15 @@ public class TransferenciaService {
     return transferenciaDTO;
   }
 
+  public List<TransferenciaDTO> findDataEntrada(ZonedDateTime dataEntrada){
+    List<Transferencia> transferencia = transferenciaRepository.findByAposDataTransferencia(dataEntrada);
+    List<TransferenciaDTO> transferenciaDTO = transferencia.stream()
+      .map(TransferenciaDTO::new)
+      .collect(Collectors.toList());
+
+    return transferenciaDTO;
+  }
+
   protected Conta findConta(Long id){
     Optional<Conta> objeto = contaRepository.findById(id);
     Conta conta = objeto.orElseThrow(() -> new ResourceNotFoundException(id));
