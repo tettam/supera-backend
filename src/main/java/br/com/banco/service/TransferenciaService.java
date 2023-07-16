@@ -2,10 +2,12 @@ package br.com.banco.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.banco.model.dto.TransferenciaDTO;
 import br.com.banco.model.entities.Conta;
 import br.com.banco.model.entities.Transferencia;
 import br.com.banco.repository.ContaRepository;
@@ -21,10 +23,15 @@ public class TransferenciaService {
   @Autowired
   private ContaRepository contaRepository;
 
-  public List<Transferencia> findAll(Long id){
+  public List<TransferenciaDTO> findAll(Long id){
     Optional<Conta> objeto = contaRepository.findById(id);
     Conta conta = objeto.orElseThrow(() -> new ResourceNotFoundException(id)); 
 
-    return transferenciaRepository.findByConta(conta);
+    List<Transferencia> transferencia = transferenciaRepository.findByConta(conta);
+    List<TransferenciaDTO> transferenciaDTO = transferencia.stream()
+      .map(TransferenciaDTO::new)
+      .collect(Collectors.toList());
+
+    return transferenciaDTO;
   }
 }

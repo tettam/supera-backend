@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.banco.model.entities.Transferencia;
+import br.com.banco.model.dto.TransferenciaDTO;
 import br.com.banco.service.TransferenciaService;
 
 @RestController
@@ -20,8 +20,8 @@ public class TransferenciaController {
   private TransferenciaService transferenciaService;
 
   @GetMapping(value = "/{id}")
-  public ResponseEntity<List<Transferencia>> findAll(@PathVariable Long id){
-    List<Transferencia> transferencias = transferenciaService.findAll(id);
-    return ResponseEntity.ok().body(transferencias);
+  public ResponseEntity<List<TransferenciaDTO>> findAll(@PathVariable Long id){
+    List<TransferenciaDTO> transferenciasDTO = transferenciaService.findAll(id);
+    return ResponseEntity.ok().body(transferenciasDTO);
   }
 }
