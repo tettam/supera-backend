@@ -1,5 +1,9 @@
 package br.com.banco.repository;
 
-public class TransferenciaRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import br.com.banco.model.entities.Transferencia;
+
+public interface TransferenciaRepository extends JpaRepository<Transferencia, Long> {
   
 }

@@ -19,7 +19,7 @@ public class Transferencia {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private Long id;
   private ZonedDateTime dataTransferencia;
   private BigDecimal valor;
   private String tipo;
