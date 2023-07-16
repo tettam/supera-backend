@@ -28,5 +28,6 @@ public class Transferencia {
 
   @ManyToOne
   @JoinColumn(name = "conta_id")
+  @JsonIgnore
   private Conta conta;
 }
