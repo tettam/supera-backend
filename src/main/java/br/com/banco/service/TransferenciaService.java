@@ -1,5 +1,6 @@
 package br.com.banco.service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,14 +25,18 @@ public class TransferenciaService {
   private ContaRepository contaRepository;
 
   public List<TransferenciaDTO> findAll(Long id){
-    Optional<Conta> objeto = contaRepository.findById(id);
-    Conta conta = objeto.orElseThrow(() -> new ResourceNotFoundException(id)); 
-
+    Conta conta = findConta(id);
     List<Transferencia> transferencia = transferenciaRepository.findByConta(conta);
     List<TransferenciaDTO> transferenciaDTO = transferencia.stream()
       .map(TransferenciaDTO::new)
       .collect(Collectors.toList());
 
     return transferenciaDTO;
+  }
+
+  protected Conta findConta(Long id){
+    Optional<Conta> objeto = contaRepository.findById(id);
+    Conta conta = objeto.orElseThrow(() -> new ResourceNotFoundException(id));
+    return conta;
   }
 }
