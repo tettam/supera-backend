@@ -21,7 +21,7 @@ public class TransferenciaService {
   @Autowired
   private ContaRepository contaRepository;
 
-  public List<Transferencia> findAll(Long id, Transferencia transferencia){
+  public List<Transferencia> findAll(Long id){
     Optional<Conta> objeto = contaRepository.findById(id);
     Conta conta = objeto.orElseThrow(() -> new ResourceNotFoundException(id)); 
 
