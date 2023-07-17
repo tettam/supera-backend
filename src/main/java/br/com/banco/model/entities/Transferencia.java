@@ -24,7 +24,7 @@ public class Transferencia {
   private ZonedDateTime dataTransferencia;
   private BigDecimal valor;
   private String tipo;
-  private String nomeOperadorTransicao;
+  private String nomeOperadorTransacao;
 
   @ManyToOne
   @JoinColumn(name = "conta_id")

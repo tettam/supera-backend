@@ -20,7 +20,7 @@ public class TransferenciaDTO {
     this.dataTransferencia = transferencia.getDataTransferencia();
     this.valor = transferencia.getValor();
     this.tipo = transferencia.getTipo();
-    this.nomeOperadorTransicao = transferencia.getNomeOperadorTransicao();
+    this.nomeOperadorTransicao = transferencia.getNomeOperadorTransacao();
   }
 
   public static Transferencia converterTransferencia(TransferenciaDTO transferenciaDTO) {

@@ -28,3 +28,4 @@ public class Conta {
   @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
   List<Transferencia> transferencias;
 }
+  

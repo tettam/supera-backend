@@ -37,7 +37,7 @@ public class TransferenciaService {
     return transferencias.stream()
       //Filtrar por nome do operador
       .filter(transferencia -> (nomeOperadorTransicao == null
-        || transferencia.getNomeOperadorTransicao().equals(nomeOperadorTransicao)))
+        || transferencia.getNomeOperadorTransacao().equals(nomeOperadorTransicao)))
 
       //Filtrar por data de inicio
       .filter(transferencia -> (dataInicio == null
