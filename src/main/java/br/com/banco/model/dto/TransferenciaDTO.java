@@ -23,7 +23,7 @@ public class TransferenciaDTO {
     this.nomeOperadorTransicao = transferencia.getNomeOperadorTransicao();
   }
 
-  public Transferencia converterTransferencia(TransferenciaDTO transferenciaDTO) {
+  public static Transferencia converterTransferencia(TransferenciaDTO transferenciaDTO) {
     Transferencia transferencia = new Transferencia();
     BeanUtils.copyProperties(transferenciaDTO, transferencia);
     return transferencia;

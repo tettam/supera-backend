@@ -12,7 +12,10 @@ import java.time.ZonedDateTime;
 
 public interface TransferenciaRepository extends JpaRepository<Transferencia, Long> {
   List<Transferencia> findByConta(Conta conta);
+  List<Transferencia> findByNomeOperadorTransicao(String nomeOperadorTransicao);
   
-  @Query("SELECT t FROM Transferencia t WHERE t.dataTransferencia > :dataReferencia ORDER BY t.dataTransferencia")
+  //Filtro - data de inicial
+  @Query("SELECT tempo FROM Transferencia tempo WHERE tempo.dataTransferencia > :dataReferencia ORDER BY tempo.dataTransferencia")
   List<Transferencia> findByAposDataTransferencia(ZonedDateTime dataReferencia);
+
 }
