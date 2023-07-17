@@ -15,7 +15,10 @@ public interface TransferenciaRepository extends JpaRepository<Transferencia, Lo
   List<Transferencia> findByNomeOperadorTransicao(String nomeOperadorTransicao);
   
   //Filtro - data de inicial
-  @Query("SELECT tempo FROM Transferencia tempo WHERE tempo.dataTransferencia > :dataReferencia ORDER BY tempo.dataTransferencia")
-  List<Transferencia> findByAposDataTransferencia(ZonedDateTime dataReferencia);
+  @Query("SELECT tempo FROM Transferencia tempo WHERE tempo.dataTransferencia >= :dataReferencia ORDER BY tempo.dataTransferencia")
+  List<Transferencia> findByDataInicialTransferencias(ZonedDateTime dataReferencia);
 
+   //Filtro - data de final
+  @Query("SELECT tempo FROM Transferencia tempo WHERE tempo.dataTransferencia <= :dataReferencia ORDER BY tempo.dataTransferencia")
+  List<Transferencia> findByDataFinalTransferencias(ZonedDateTime dataReferencia);
 }

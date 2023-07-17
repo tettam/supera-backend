@@ -1,5 +1,7 @@
 package br.com.banco.service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +38,9 @@ public class TransferenciaService {
   }
 
   //Filtrar por data inicial
-  public List<TransferenciaDTO> findDataEntrada(ZonedDateTime dataEntrada){
-    List<Transferencia> transferencia = transferenciaRepository.findByAposDataTransferencia(dataEntrada);
+  public List<TransferenciaDTO> findDataInicial(LocalDateTime dataEntrada){
+    ZonedDateTime zonedDateTime = dataEntrada.atZone(ZoneId.systemDefault());
+    List<Transferencia> transferencia = transferenciaRepository.findByDataInicialTransferencias(zonedDateTime);
     List<TransferenciaDTO> transferenciaDTOs = transferencia.stream()
       .map(TransferenciaDTO::new)
       .collect(Collectors.toList());
@@ -46,9 +49,15 @@ public class TransferenciaService {
   }
 
   //Filtrar por data final
+  public List<TransferenciaDTO> findDataFinal(LocalDateTime dataInicial){
+    ZonedDateTime zonedDateTime = dataInicial.atZone(ZoneId.systemDefault());
+    List<Transferencia> transferencias = transferenciaRepository.findByDataFinalTransferencias(zonedDateTime);
+    List<TransferenciaDTO> transferenciaDTOs = transferencias.stream()
+      .map(TransferenciaDTO::new)
+      .collect(Collectors.toList());
 
-  //Filtrar entre as data
-
+    return transferenciaDTOs;
+  }
   //Filtrar por nome do operador
   public List<TransferenciaDTO> findNomeOperador(String nomeOperador){
     List<Transferencia> transferencias = transferenciaRepository.findByNomeOperadorTransicao(nomeOperador);
@@ -58,8 +67,6 @@ public class TransferenciaService {
 
     return transferenciaDTOs;
   }
-
-  //Todos os filtros
 
   //Busca por conta
   public Conta findConta(Long id){

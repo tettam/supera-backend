@@ -26,6 +26,5 @@ public class TransferenciaFiltrosService {
             || transferenciaService.findNomeOperador(nomeOperador)))
         .filter(transferenciaDTOs -> (dataInicio == null
             || transferenciaService.findDataEntrada(dataInicio)))
-
     }
 }
