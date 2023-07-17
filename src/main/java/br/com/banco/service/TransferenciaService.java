@@ -37,15 +37,21 @@ public class TransferenciaService {
     return transferencias.stream()
       //Filtrar por nome do operador
       .filter(transferencia -> (nomeOperadorTransicao == null
-        || transferencia.getNomeOperadorTransacao().equals(nomeOperadorTransicao)))
+        || transferencia.getNomeOperadorTransacao() != null
+        && transferencia.getNomeOperadorTransacao()
+        .equals(nomeOperadorTransicao)))
 
       //Filtrar por data de inicio
       .filter(transferencia -> (dataInicio == null
-        || transferencia.getDataTransferencia().isAfter(dataInicio.atZone(ZoneId.systemDefault()))))
+        || transferencia.getDataTransferencia()
+        .isAfter(dataInicio.atZone(ZoneId.systemDefault()))))
        
       //Filtrar por data final  
       .filter(transferencia -> (dataFinal == null
-        || transferencia.getDataTransferencia().isBefore(dataFinal.atZone(ZoneId.systemDefault()))))
+        || transferencia.getDataTransferencia()
+        .isBefore(dataFinal.atZone(ZoneId.systemDefault()))))
+
+
       .map(TransferenciaDTO::new)
       .collect(Collectors.toList());
   }

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,8 +26,10 @@ public class TransferenciaController {
   public ResponseEntity<List<TransferenciaDTO>> getTransferencias(
     @PathVariable Long id,
     @RequestParam(required = false) String nomeOperadorTransicao,
-    @RequestParam(required = false) LocalDateTime dataInicio,
-    @RequestParam(required = false) LocalDateTime dataFinal){
+    @RequestParam(required = false) 
+      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicio,
+    @RequestParam(required = false) 
+      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal){
 
     List<TransferenciaDTO> transferenciasDTO = transferenciaService.findFiltrosTransferencias(
       id,
