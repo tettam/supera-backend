@@ -2,7 +2,6 @@ package br.com.banco.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,46 +25,29 @@ public class TransferenciaService {
   @Autowired
   private ContaRepository contaRepository;
 
-  // Sem filtros
-  public List<TransferenciaDTO> findAll(Long id){
+  public List<TransferenciaDTO> findFiltrosTransferencias(
+    Long id,
+    String nomeOperadorTransicao,
+    LocalDateTime dataInicio, 
+    LocalDateTime dataFinal){
+
     Conta conta = findConta(id);
-    List<Transferencia> transferencia = transferenciaRepository.findByConta(conta);
-    List<TransferenciaDTO> transferenciaDTOs = transferencia.stream()
+    List<Transferencia> transferencias = transferenciaRepository.findByConta(conta);
+
+    return transferencias.stream()
+      //Filtrar por nome do operador
+      .filter(transferencia -> (nomeOperadorTransicao == null
+        || transferencia.getNomeOperadorTransicao().equals(nomeOperadorTransicao)))
+
+      //Filtrar por data de inicio
+      .filter(transferencia -> (dataInicio == null
+        || transferencia.getDataTransferencia().isAfter(dataInicio.atZone(ZoneId.systemDefault()))))
+       
+      //Filtrar por data final  
+      .filter(transferencia -> (dataFinal == null
+        || transferencia.getDataTransferencia().isBefore(dataFinal.atZone(ZoneId.systemDefault()))))
       .map(TransferenciaDTO::new)
       .collect(Collectors.toList());
-
-    return transferenciaDTOs;
-  }
-
-  //Filtrar por data inicial
-  public List<TransferenciaDTO> findDataInicial(LocalDateTime dataEntrada){
-    ZonedDateTime zonedDateTime = dataEntrada.atZone(ZoneId.systemDefault());
-    List<Transferencia> transferencia = transferenciaRepository.findByDataInicialTransferencias(zonedDateTime);
-    List<TransferenciaDTO> transferenciaDTOs = transferencia.stream()
-      .map(TransferenciaDTO::new)
-      .collect(Collectors.toList());
-
-    return transferenciaDTOs;
-  }
-
-  //Filtrar por data final
-  public List<TransferenciaDTO> findDataFinal(LocalDateTime dataInicial){
-    ZonedDateTime zonedDateTime = dataInicial.atZone(ZoneId.systemDefault());
-    List<Transferencia> transferencias = transferenciaRepository.findByDataFinalTransferencias(zonedDateTime);
-    List<TransferenciaDTO> transferenciaDTOs = transferencias.stream()
-      .map(TransferenciaDTO::new)
-      .collect(Collectors.toList());
-
-    return transferenciaDTOs;
-  }
-  //Filtrar por nome do operador
-  public List<TransferenciaDTO> findNomeOperador(String nomeOperador){
-    List<Transferencia> transferencias = transferenciaRepository.findByNomeOperadorTransicao(nomeOperador);
-    List<TransferenciaDTO> transferenciaDTOs = transferencias.stream()
-      .map(TransferenciaDTO::new)
-      .collect(Collectors.toList());
-
-    return transferenciaDTOs;
   }
 
   //Busca por conta
