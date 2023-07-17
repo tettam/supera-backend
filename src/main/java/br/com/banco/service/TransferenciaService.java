@@ -50,9 +50,8 @@ public class TransferenciaService {
   //Filtrar entre as data
 
   //Filtrar por nome do operador
-  public List<TransferenciaDTO> findNomeOperador(Long id, TransferenciaDTO transferenciaDTO){
-    Conta conta = findConta(id);
-    List<Transferencia> transferencias = transferenciaRepository.findByNomeOperadorTransicao(transferenciaDTO.getNomeOperadorTransicao());
+  public List<TransferenciaDTO> findNomeOperador(String nomeOperador){
+    List<Transferencia> transferencias = transferenciaRepository.findByNomeOperadorTransicao(nomeOperador);
     List<TransferenciaDTO> transferenciaDTOs = transferencias.stream()
       .map(TransferenciaDTO::new)
       .collect(Collectors.toList());
@@ -63,7 +62,7 @@ public class TransferenciaService {
   //Todos os filtros
 
   //Busca por conta
-  protected Conta findConta(Long id){
+  public Conta findConta(Long id){
     Optional<Conta> objeto = contaRepository.findById(id);
     Conta conta = objeto.orElseThrow(() -> new ResourceNotFoundException(id));
     return conta;

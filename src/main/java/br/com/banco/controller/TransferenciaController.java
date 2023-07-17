@@ -25,7 +25,7 @@ public class TransferenciaController {
   @GetMapping(value = "/{id}")
   public ResponseEntity<List<TransferenciaDTO>> getTransferencias(
     @PathVariable Long id,
-    @RequestParam(required = false) String nomeOperador,
+    @RequestParam(required = false) String nomeOperadorTransicao,
     @RequestParam(required = false) LocalDateTime dataInicio,
     @RequestParam(required = false) LocalDateTime dataFinal){
 
