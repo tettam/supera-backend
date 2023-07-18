@@ -11,12 +11,14 @@ import lombok.Data;
 @Data
 public class TransferenciaDTO {
 
+  private Long id;
   private ZonedDateTime dataTransferencia;
   private BigDecimal valor;
   private String tipo;
   private String nomeOperadorTransicao;
 
   public TransferenciaDTO(Transferencia transferencia) {
+    this.id = transferencia.getId();
     this.dataTransferencia = transferencia.getDataTransferencia();
     this.valor = transferencia.getValor();
     this.tipo = transferencia.getTipo();
