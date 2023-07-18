@@ -1,15 +1,19 @@
 #### Dependências adicionais que foram utilizadas
 - Spring Boot DevTools
+
 	Torna o desenvolvimento mais ágil, pois podemos perceber as mudanças em tempo real sem a necessidade de reiniciar manualmente cada vez que é feita uma alteração na aplicação.
 	
 - Spring Start Validator
+
 	O uso dessa dependência ajuda a garantir a integridade e a conscistência dos dados recebidos antes de salvar no banco de dados.
 
 #### Padrões de projeto
 -  DTO (Data Transfer Object)
+
 	Foi utilizado para enviar somente as informações necessárias e reduzir a quantidade de endpoints.
 	
 - MVC (Model View Controller)
+
 	Separei de forma clara a repostasabilidade de cada camada da aplicação, resultando em um código organizado e de fácil manutenção e evolução.
 
 
