@@ -9,12 +9,12 @@ import lombok.Data;
 public class ValoresTransferenciasDTO {
   
   private BigDecimal somaTotal;
-  private BigDecimal valorFiltrado;
+  private BigDecimal somaFiltrado;
   private List<TransferenciaDTO> transferencias;
 
-  public ValoresTransferenciasDTO(BigDecimal somaTotal, BigDecimal valorFiltrado, List<TransferenciaDTO> transferencias) {
+  public ValoresTransferenciasDTO(BigDecimal somaTotal, BigDecimal somaFiltrado, List<TransferenciaDTO> transferencias) {
 	this.somaTotal = somaTotal;
-	this.valorFiltrado = valorFiltrado;
+	this.somaFiltrado = somaFiltrado;
 	this.transferencias = transferencias;
   }
 }

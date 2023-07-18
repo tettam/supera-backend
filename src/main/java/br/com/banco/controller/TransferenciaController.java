@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.banco.model.dto.TransferenciaDTO;
+import br.com.banco.model.dto.ValoresTransferenciasDTO;
 import br.com.banco.service.TransferenciaService;
 
 @RestController
@@ -25,7 +25,7 @@ public class TransferenciaController {
 
   @GetMapping(value = "/{id}")
   @CrossOrigin
-  public ResponseEntity<List<TransferenciaDTO>> getTransferencias(
+  public ResponseEntity<ValoresTransferenciasDTO> getTransferencias(
     @PathVariable Long id,
     @RequestParam(required = false) String nomeOperadorTransicao,
     @RequestParam(required = false) 
@@ -33,12 +33,12 @@ public class TransferenciaController {
     @RequestParam(required = false) 
       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal){
 
-    List<TransferenciaDTO> transferenciasDTO = transferenciaService.findFiltrosTransferencias(
+    ValoresTransferenciasDTO valoresTransferencias = transferenciaService.findFiltrosTransferencias(
       id,
       nomeOperadorTransicao,
       dataInicio,
       dataFinal
     );
-    return ResponseEntity.ok().body(transferenciasDTO);
+    return ResponseEntity.ok().body(valoresTransferencias);
   }
 }

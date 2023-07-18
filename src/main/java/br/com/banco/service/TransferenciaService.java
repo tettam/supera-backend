@@ -1,5 +1,6 @@
 package br.com.banco.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.banco.model.dto.TransferenciaDTO;
+import br.com.banco.model.dto.ValoresTransferenciasDTO;
 import br.com.banco.model.entities.Conta;
 import br.com.banco.model.entities.Transferencia;
 import br.com.banco.repository.ContaRepository;
@@ -25,7 +27,7 @@ public class TransferenciaService {
   @Autowired
   private ContaRepository contaRepository;
 
-  public List<TransferenciaDTO> findFiltrosTransferencias(
+  public ValoresTransferenciasDTO findFiltrosTransferencias(
     Long id,
     String nomeOperadorTransicao,
     LocalDateTime dataInicio, 
@@ -33,8 +35,7 @@ public class TransferenciaService {
 
     Conta conta = findConta(id);
     List<Transferencia> transferencias = transferenciaRepository.findByConta(conta);
-
-    return transferencias.stream()
+    List<TransferenciaDTO> transferenciaFiltrados = transferencias.stream()
       //Filtrar por nome do operador
       .filter(transferencia -> (nomeOperadorTransicao == null
         || transferencia.getNomeOperadorTransacao() != null
@@ -50,10 +51,12 @@ public class TransferenciaService {
       .filter(transferencia -> (dataFinal == null
         || transferencia.getDataTransferencia()
         .isBefore(dataFinal.atZone(ZoneId.systemDefault()))))
-
-
       .map(TransferenciaDTO::new)
       .collect(Collectors.toList());
+    
+    BigDecimal valorTotalFiltrado = valorFiltradoTransferencias(transferenciaFiltrados);
+    BigDecimal valorTotal = valorTotalTransferencias(transferencias);
+    return new ValoresTransferenciasDTO(valorTotal, valorTotalFiltrado, transferenciaFiltrados);
   }
 
   //Busca por conta
@@ -61,5 +64,17 @@ public class TransferenciaService {
     Optional<Conta> objeto = contaRepository.findById(id);
     Conta conta = objeto.orElseThrow(() -> new ResourceNotFoundException(id));
     return conta;
+  }
+
+  public BigDecimal valorTotalTransferencias(List<Transferencia> transferencias){
+    return transferencias.stream()
+      .map(Transferencia::getValor)
+      .reduce(BigDecimal.ZERO, BigDecimal::add);
+  }
+
+  public BigDecimal valorFiltradoTransferencias(List<TransferenciaDTO> transferencias){
+    return transferencias.stream()
+      .map(TransferenciaDTO::getValor)
+      .reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 }
