@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -28,7 +26,7 @@ public class Transferencia {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank(message = "Campo obrigatório")
+  @NotNull(message = "Campo obrigatório")
   private ZonedDateTime dataTransferencia;
 
   @NotNull(message = "Valor obrigatório")
@@ -38,8 +36,6 @@ public class Transferencia {
   @NotBlank(message = "Campo obrigatório")
   @Size(message = "Campo máximo de 15 caracteres",max = 15)
   private String tipo;
-
-  @NotNull
   private String nomeOperadorTransacao;
 
   @ManyToOne
